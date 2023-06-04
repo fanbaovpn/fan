@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>过年倒计时</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #2c3e50;
+      overflow: hidden;
+    }
+    #countdown {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      font-size: 5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px #000;
+    }
+    .snow {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: 0 0 6px 4px rgba(255, 255, 255, 0.5);
+      animation: snow-fall linear infinite;
+      transform-origin: center bottom;
+    }
+    @keyframes snow-fall {
+      from {
+        transform: translateY(-10px);
+      }
+      to {
+        transform: translateY(100vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown"></div>
+  <audio src="http://webftp.bbs.hnol.net/linm/Music/rh-sf/01.mp3" autoplay loop></audio>
+  链接: https://pan.baidu.com/s/1I1jYa6zLbZ1k6GtKeeX7Ww 提取码: schd ，，下载了压缩包额密码为qwer
+  <script>// 设置目标日期为距离当前时间的一个月之后的春节
+    var targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 30);
+    targetDate.setMonth(0);
+    targetDate.setDate(1);
+    var year = targetDate.getFullYear();
+    if (targetDate < new Date()) {
+      year++;
+      targetDate.setFullYear(year);
+    }
+
+    var countdownElem = document.getElementById('countdown');
+    // 每秒更新倒计时
+    setInterval(function() {
+      var now = new Date();
+      var distance = targetDate - now;
+
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownElem.innerHTML = year + '年春节还有<br>' + days + '天' + hours + '小时' + minutes + '分钟' + seconds + '秒';
+    }, 1000);
+
+    // 添加雪花特效
+    for (var i = 0; i < 50; i++) {
+      var snowElem = document.createElement('div');
+      snowElem.className = 'snow';
+      snowElem.style.left = Math.random() * window.innerWidth + 'px';
+      snowElem.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.body.appendChild(snowElem);
+    }
+  </script>
+</body>
+</html>
